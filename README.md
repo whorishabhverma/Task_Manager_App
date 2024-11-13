@@ -40,7 +40,7 @@ The application is structured as follows:
    npm run build
 
 
-##Future Enhancements
+## Future Enhancements
 - Implement a backend to sync tasks across devices.
 - Add user authentication to allow multiple users to manage their tasks.
 - Introduce notifications or reminders for upcoming and overdue tasks.
