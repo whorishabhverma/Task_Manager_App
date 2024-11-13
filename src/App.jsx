@@ -1,18 +1,18 @@
-import React from "react"
-import { useState ,useEffect} from "react"
-import PriorityFilter from "./Components/PriorityFilter"
-import SearchBar from "./Components/Searchbar"
-import StatusFilter from "./Components/StatusFilter"
-import TaskForm from "./Components/TaskForm"
-import TaskDashboard from "./Components/TaskDashboard"
-export default function App() {
+import React, { useState, useEffect } from 'react';
+import TaskDashboard from './Components/TaskDashboard';
+import SearchBar from './Components/Searchbar';
+import PriorityFilter from './Components/PriorityFilter';
+import StatusFilter from './Components/StatusFilter';
+import TaskForm from './Components/TaskForm';
+
+const App = () => {
   const [tasks, setTasks] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [priorityFilter, setPriorityFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
   const [showForm, setShowForm] = useState(false);
-  const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
+  const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
 
   // Load tasks from localStorage with error handling and debugging
   useEffect(() => {
@@ -94,11 +94,10 @@ export default function App() {
       {/* Header Section */}
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Task Management</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Task Manager</h1>
         </div>
       </header>
-      
-      
+
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Controls Section */}
         <div className="space-y-4 md:space-y-0 md:flex md:items-center md:justify-between mb-6">
@@ -148,12 +147,6 @@ export default function App() {
           </div>
         )}
 
-        
-
-      </main>
-
-
-      
         {/* Task Dashboard */}
         <div className="bg-white rounded-lg shadow">
           <TaskDashboard
@@ -167,7 +160,9 @@ export default function App() {
           />
         </div>
 
+      </main>
+    </div>
+  );
+};
 
-    </div>  
-  )
-}
+export default App;
