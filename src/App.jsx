@@ -1,14 +1,94 @@
 import React from "react"
+import { useState ,useEffect} from "react"
 import PriorityFilter from "./Components/PriorityFilter"
 import SearchBar from "./Components/Searchbar"
 import StatusFilter from "./Components/StatusFilter"
 import TaskForm from "./Components/TaskForm"
 export default function App() {
+  const [tasks, setTasks] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [priorityFilter, setPriorityFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
   const [showForm, setShowForm] = useState(false);
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
+  const [editingTask, setEditingTask] = useState(null);
+
+
+
+  // Load tasks from localStorage with error handling and debugging
+  useEffect(() => {
+    const storedTasks = localStorage.getItem('tasks');
+    
+    if (storedTasks) {
+      try {
+        const parsedTasks = JSON.parse(storedTasks);
+        
+        if (Array.isArray(parsedTasks)) {
+          console.log("Loaded tasks from localStorage:", parsedTasks);
+          setTasks(parsedTasks);
+        } else {
+          console.error("Stored tasks are not in the correct format.");
+          setTasks([]);  // Default to an empty array if the format is incorrect
+        }
+      } catch (error) {
+        console.error('Failed to parse tasks from localStorage:', error);
+        setTasks([]);  // Default to an empty array in case of parse error
+      }
+    } else {
+      console.log("No tasks found in localStorage");
+      setTasks([]);  // Default to an empty array if no tasks are stored
+    }
+  }, []);
+  
+  // Save tasks to localStorage whenever `tasks` state changes
+  useEffect(() => {
+    if (tasks.length > 0) {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+      console.log('Saved tasks to localStorage:', tasks);
+    }
+  }, [tasks]);
+
+  const addTask = (task) => {
+    const newTask = { ...task, id: Date.now(), status: 'Pending' };
+    console.log('Adding new task:', newTask);
+
+    setTasks(prevTasks => {
+      const updatedTasks = [...prevTasks, newTask];
+      return updatedTasks; // State will trigger the localStorage update
+    });
+
+    setShowForm(false);
+  };
+
+  const updateTask = (updatedTask) => {
+    console.log('Updating task:', updatedTask);
+
+    setTasks(prevTasks => {
+      const updatedTasks = prevTasks.map(task =>
+        task.id === updatedTask.id ? updatedTask : task
+      );
+      return updatedTasks; // State will trigger the localStorage update
+    });
+
+    setEditingTask(null);
+    setShowForm(false);
+  };
+
+  const deleteTask = (id) => {
+    console.log('Deleting task with id:', id);
+
+    setTasks(prevTasks => {
+        const updatedTasks = prevTasks.filter(task => task.id !== id);
+
+        // Update localStorage after modifying the state
+        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+
+        console.log('Updated tasks after deletion:', updatedTasks);
+
+        return updatedTasks; // State update will trigger re-render
+    });
+};
+
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -18,6 +98,7 @@ export default function App() {
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Task Management</h1>
         </div>
       </header>
+      
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Controls Section */}
