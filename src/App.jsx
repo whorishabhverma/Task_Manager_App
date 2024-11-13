@@ -4,6 +4,7 @@ import PriorityFilter from "./Components/PriorityFilter"
 import SearchBar from "./Components/Searchbar"
 import StatusFilter from "./Components/StatusFilter"
 import TaskForm from "./Components/TaskForm"
+import TaskDashboard from "./Components/TaskDashboard"
 export default function App() {
   const [tasks, setTasks] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -150,6 +151,21 @@ export default function App() {
         
 
       </main>
+
+
+      
+        {/* Task Dashboard */}
+        <div className="bg-white rounded-lg shadow">
+          <TaskDashboard
+            tasks={tasks}
+            searchQuery={searchQuery}
+            priorityFilter={priorityFilter}
+            statusFilter={statusFilter}
+            deleteTask={deleteTask}
+            setEditingTask={(task) => { setEditingTask(task); setShowForm(true); }}
+            updateTask={updateTask}
+          />
+        </div>
 
 
     </div>  
