@@ -13,8 +13,6 @@ export default function App() {
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
 
-
-
   // Load tasks from localStorage with error handling and debugging
   useEffect(() => {
     const storedTasks = localStorage.getItem('tasks');
