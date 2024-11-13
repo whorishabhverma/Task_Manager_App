@@ -29,3 +29,19 @@ The application is structured as follows:
    ```bash
    git clone https://github.com/yourusername/task-management.git
    cd task-management
+2. **Install dependencies:**:
+   ```bash
+   npm install
+3. **Run the application:**:
+   ```bash
+   npm run dev
+4. **Build for production**:
+   ```bash
+   npm run build
+
+
+##Future Enhancements
+- Implement a backend to sync tasks across devices.
+- Add user authentication to allow multiple users to manage their tasks.
+- Introduce notifications or reminders for upcoming and overdue tasks.
+
